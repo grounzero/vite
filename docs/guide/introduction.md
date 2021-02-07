@@ -24,7 +24,7 @@ Vite aims to address these issues by leveraging new advancements in the ecosyste
 
 When cold-starting the dev server, a bundler-based build setup has to eagerly crawl and build your entire application before it can be served.
 
-Vite improves the dev server start time by first deviding the modules in an application into two categories: **dependencies** and **source code**.
+Vite improves the dev server start time by first dividing the modules in an application into two categories: **dependencies** and **source code**.
 
 - **Dependencies** are mostly plain JavaScript that do not change often during development. Some large dependencies (e.g. component libraries with hundreds of modules) are also quite expensive to process. Dependencies may also be shipped in various module formats (e.g. ESM or CommonJS).
 
@@ -32,7 +32,7 @@ Vite improves the dev server start time by first deviding the modules in an appl
 
 - **Source code** often contains non-plain JavaScript that needs transforming (e.g. JSX, CSS or Vue/Svelete components), and will be edited very often. Also, not all source code needs to be loaded at the same time (e.g. with route-based code-splitting).
 
-  Vite serves source code over [native ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). This is essentially letting the browser taking over part of the job of a bundler: Vite only needs to transform and serve source code on demand, as the browser requests them. Code behind conditional dynamic imports are only processed if actually used on the current screen.
+  Vite serves source code over [native ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). This is essentially letting the browser take over part of the job of a bundler: Vite only needs to transform and serve source code on demand, as the browser requests them. Code behind conditional dynamic imports are only processed if actually used on the current screen.
 
   ![bundler based dev server](/images/bundler.png)
 
@@ -42,7 +42,7 @@ Vite improves the dev server start time by first deviding the modules in an appl
 
 When a file is edited in a bundler-based build setup, in addition to re-building the file itself, the bundler also needs to invalidate part of its module graph and re-construct the entire bundle. Reconstructing the bundle can be expensive, and reloading the page blows away the current state of the application. This is why some bundlers support Hot Module Replacment (HMR): allowing a module to "hot replace" itself without affecting the rest of the page. This greatly improves DX - however, in practice we've found that even HMR update speed deteriorates significantly as the size of the application grows.
 
-In Vite, HMR is performed over native ESM. When a file is edited, Vite only needs to precisely invalidate the chain between the edited module and its closesest HMR boundary (most of the time only the module itself), making HMR updates consistently fast regardless of the size of your application.
+In Vite, HMR is performed over native ESM. When a file is edited, Vite only needs to precisely invalidate the chain between the edited module and its closest HMR boundary (most of the time only the module itself), making HMR updates consistently fast regardless of the size of your application.
 
 Vite also leverages HTTP headers to speed up full page reloads (again, let the browser do more work for us): source code module requests are made conditional via `304 Not Modified`, and dependency module requests are strongly cached via `Cache-Control: max-age=31536000,immutable` so they don't hit the server again once cached.
 
